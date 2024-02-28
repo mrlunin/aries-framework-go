@@ -94,16 +94,11 @@ func (c *Operation) registerHandler() {
 // Creates a new connection invitation....
 //
 // Responses:
-//    default: genericError
-//        200: createInvitationResponse
+//
+//	default: genericError
+//	    200: createInvitationResponse
 func (c *Operation) CreateInvitation(rw http.ResponseWriter, req *http.Request) {
-	reqBytes, err := queryValuesAsJSON(req.URL.Query())
-	if err != nil {
-		rest.SendHTTPStatusError(rw, http.StatusBadRequest, didexchange.InvalidRequestErrorCode, err)
-		return
-	}
-
-	rest.Execute(c.command.CreateInvitation, rw, bytes.NewReader(reqBytes))
+	rest.Execute(c.command.CreateInvitation, rw, req.Body)
 }
 
 // ReceiveInvitation swagger:route POST /connections/receive-invitation did-exchange receiveInvitation
@@ -111,8 +106,9 @@ func (c *Operation) CreateInvitation(rw http.ResponseWriter, req *http.Request) 
 // Receive a new connection invitation....
 //
 // Responses:
-//    default: genericError
-//        200: receiveInvitationResponse
+//
+//	default: genericError
+//	    200: receiveInvitationResponse
 func (c *Operation) ReceiveInvitation(rw http.ResponseWriter, req *http.Request) {
 	rest.Execute(c.command.ReceiveInvitation, rw, req.Body)
 }
@@ -122,8 +118,9 @@ func (c *Operation) ReceiveInvitation(rw http.ResponseWriter, req *http.Request)
 // Accept a stored connection invitation....
 //
 // Responses:
-//    default: genericError
-//        200: acceptInvitationResponse
+//
+//	default: genericError
+//	    200: acceptInvitationResponse
 func (c *Operation) AcceptInvitation(rw http.ResponseWriter, req *http.Request) {
 	id, found := getIDFromRequest(rw, req)
 	if !found {
@@ -138,11 +135,12 @@ func (c *Operation) AcceptInvitation(rw http.ResponseWriter, req *http.Request) 
 
 // CreateImplicitInvitation swagger:route POST /connections/create-implicit-invitation did-exchange implicitInvitation
 //
-//  Create implicit invitation using inviter DID.
+//	Create implicit invitation using inviter DID.
 //
 // Responses:
-//    default: genericError
-//        200: implicitInvitationResponse
+//
+//	default: genericError
+//	    200: implicitInvitationResponse
 func (c *Operation) CreateImplicitInvitation(rw http.ResponseWriter, req *http.Request) {
 	reqBytes, err := queryValuesAsJSON(req.URL.Query())
 	if err != nil {
@@ -158,8 +156,9 @@ func (c *Operation) CreateImplicitInvitation(rw http.ResponseWriter, req *http.R
 // Accepts a stored connection request.
 //
 // Responses:
-//    default: genericError
-//        200: acceptExchangeResponse
+//
+//	default: genericError
+//	    200: acceptExchangeResponse
 func (c *Operation) AcceptExchangeRequest(rw http.ResponseWriter, req *http.Request) {
 	id, found := getIDFromRequest(rw, req)
 	if !found {
@@ -177,8 +176,9 @@ func (c *Operation) AcceptExchangeRequest(rw http.ResponseWriter, req *http.Requ
 // query agent to agent connections.
 //
 // Responses:
-//    default: genericError
-//        200: queryConnectionsResponse
+//
+//	default: genericError
+//	    200: queryConnectionsResponse
 func (c *Operation) QueryConnections(rw http.ResponseWriter, req *http.Request) {
 	reqBytes, err := queryValuesAsJSON(req.URL.Query())
 	if err != nil {
@@ -194,8 +194,9 @@ func (c *Operation) QueryConnections(rw http.ResponseWriter, req *http.Request) 
 // Fetch a single connection record.
 //
 // Responses:
-//    default: genericError
-//        200: queryConnectionResponse
+//
+//	default: genericError
+//	    200: queryConnectionResponse
 func (c *Operation) QueryConnectionByID(rw http.ResponseWriter, req *http.Request) {
 	id, found := getIDFromRequest(rw, req)
 	if !found {
@@ -212,8 +213,9 @@ func (c *Operation) QueryConnectionByID(rw http.ResponseWriter, req *http.Reques
 // Saves the connection record.
 //
 // Responses:
-//    default: genericError
-//    200: createConnectionResp
+//
+//	default: genericError
+//	200: createConnectionResp
 func (c *Operation) CreateConnection(rw http.ResponseWriter, req *http.Request) {
 	rest.Execute(c.command.CreateConnection, rw, req.Body)
 }
@@ -223,8 +225,9 @@ func (c *Operation) CreateConnection(rw http.ResponseWriter, req *http.Request) 
 // Removes given connection record.
 //
 // Responses:
-//    default: genericError
-//    200: removeConnectionResponse
+//
+//	default: genericError
+//	200: removeConnectionResponse
 func (c *Operation) RemoveConnection(rw http.ResponseWriter, req *http.Request) {
 	id, found := getIDFromRequest(rw, req)
 	if !found {
