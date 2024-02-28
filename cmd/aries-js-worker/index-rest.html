@@ -1,0 +1,88 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <script src="dist/rest/aries.js"></script>
+</head>
+<body>
+<div>
+    <fieldset>
+        <legend id="mode-label" style="font-size: medium;font-weight: bold">Running in REST Mode...</legend>
+    </fieldset>
+</div>
+<div>
+    <table>
+        <tr>
+            <td width="50%" valign="top">
+                <fieldset>
+                    <legend style="font-size: x-large;font-weight: bold">Aries Agent</legend>
+                    <table>
+                        <tr>
+                            <td colspan="2">
+                                <div>Start Options :</div>
+                                <pre id="opts"></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </td>
+            </tr>
+    </table>
+</div>
+<hr/>
+<div style="height: 10%">
+    <label for="output" style="font-size: large;font-weight: bold">Status: </label>
+    <output id="output" style="color: green;">Agent starting...</output>
+</div>
+<script>
+    function getSubdomain() {
+        const ls_data = localStorage.getItem("appname");
+        if (ls_data) return ls_data;
+
+        var url = window.location.hostname;
+        var parts = url.split('.');
+
+        // If there are at least 3 parts (such as subdomain.domain.com),
+        // then return the first part, which is the subdomain
+        if (parts.length >= 3) {
+            return parts[0];
+        }
+
+        // If not, there is no subdomain (or it's a second-level domain like domain.com)
+        return '';
+    }
+    function getDomain() {
+        const ls_data = localStorage.getItem("domain");
+        if (ls_data) return ls_data;
+        return "jus.do";
+    }
+
+    let aries
+    const request = {
+        "assetsPath": "/dist/assets",
+        "agent-rest-url": `https://${getSubdomain()}-rest.${getDomain()}`,
+        "agent-rest-wshook": `wss://${getSubdomain()}-agent-ws.${getDomain()}`,
+        "media-type-profiles": [
+            "didcomm/aip2;env=rfc19"
+        ]
+    }
+
+    async function startAries() {
+        if (aries) {
+            console.error("aries is already initialized")
+            return
+        }
+
+        aries = await new Aries.Framework(request)
+
+        aries.startNotifier(function(val) {
+            console.log("incoming msg :", val.id, val.topic, val.payload)
+        }, ["all"]);
+
+        document.querySelector("#output").value = "aries started"
+        document.querySelector("#opts").innerText = JSON.stringify(request, null, 2)
+    }
+    setTimeout(startAries, 200);
+</script>
+</body>
+</html>
+
