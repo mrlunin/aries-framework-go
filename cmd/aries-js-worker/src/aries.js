@@ -852,7 +852,7 @@ const Aries = function (opts) {
              * @returns {Promise<Object>}
              */
             services: async function () {
-                return invoke(aw, pending, this.pkgname, "Services", {}, "timeout while getting list of registered services")
+                return invoke(aw, pending, this.pkgname, "RegisteredServices", {}, "timeout while getting list of registered services")
             },
 
             /**
@@ -862,7 +862,7 @@ const Aries = function (opts) {
              * @returns {Promise<Object>}
              */
             registerService: async function (req) {
-                return invoke(aw, pending, this.pkgname, "RegisterService", req, "timeout while registering service")
+                return invoke(aw, pending, this.pkgname, "RegisterMessageService", req, "timeout while registering service")
             },
 
             /**
@@ -872,7 +872,7 @@ const Aries = function (opts) {
              * @returns {Promise<Object>}
              */
             registerHTTPService: async function (req) {
-                return invoke(aw, pending, this.pkgname, "RegisterHTTPService", req, "timeout while registering HTTP service")
+                return invoke(aw, pending, this.pkgname, "RegisterHTTPMessageService", req, "timeout while registering HTTP service")
             },
 
             /**
@@ -882,7 +882,7 @@ const Aries = function (opts) {
              * @returns {Promise<Object>}
              */
             unregisterService: async function (req) {
-                return invoke(aw, pending, this.pkgname, "UnregisterService", req, "timeout while unregistering service")
+                return invoke(aw, pending, this.pkgname, "UnregisterMessageService", req, "timeout while unregistering service")
             },
 
             /**
@@ -892,7 +892,7 @@ const Aries = function (opts) {
              * @returns {Promise<Object>}
              */
             send: async function (req) {
-                return invoke(aw, pending, this.pkgname, "Send", req, "timeout while sending new message")
+                return invoke(aw, pending, this.pkgname, "SendNewMessage", req, "timeout while sending new message")
             },
 
             /**
@@ -902,7 +902,7 @@ const Aries = function (opts) {
              * @returns {Promise<Object>}
              */
             reply: async function (req) {
-                return invoke(aw, pending, this.pkgname, "Reply", req, "timeout while sending reply message")
+                return invoke(aw, pending, this.pkgname, "SendReplyMessage", req, "timeout while sending reply message")
             }
         },
 
@@ -959,7 +959,7 @@ const Aries = function (opts) {
              * @returns {Promise<Object>}
              */
             getDIDRecords: async function () {
-                return invoke(aw, pending, this.pkgname, "GetDIDRecords", {}, "timeout while retrieving did records")
+                return invoke(aw, pending, this.pkgname, "GetDIDs", {}, "timeout while retrieving did records")
             },
         },
 
@@ -996,7 +996,7 @@ const Aries = function (opts) {
              */
             getConnections: async function () {
                 // console.log("router get connection")
-                return invoke(aw, pending, this.pkgname, "Connections", "{}", "timeout while fetching router connection id")
+                return invoke(aw, pending, this.pkgname, "GetConnections", "{}", "timeout while fetching router connection id")
             },
 
             /**
