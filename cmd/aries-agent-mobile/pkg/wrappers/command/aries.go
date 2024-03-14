@@ -112,6 +112,10 @@ func prepareFrameworkOptions(opts *config.Options) ([]aries.Option, error) {
 		options = append(options, aries.WithTransportReturnRoute(opts.TransportReturnRoute))
 	}
 
+	if opts.MediaTypeProfiles != "" {
+		options = append(options, aries.WithMediaTypeProfiles(strings.Split(opts.MediaTypeProfiles, ",")))
+	}
+
 	var storageProvider storage.Provider
 	if opts.Storage != nil {
 		storageProvider = storageWrapper.New(opts.Storage)

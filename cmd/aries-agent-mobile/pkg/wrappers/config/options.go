@@ -22,6 +22,7 @@ type Options struct {
 	AutoAccept           bool
 	TransportReturnRoute string
 	LoadRemoteDocuments  bool
+	MediaTypeProfiles    string
 	LogLevel             string
 	Logger               api.LoggerProvider
 	Storage              api.Provider
