@@ -996,7 +996,7 @@ const Aries = function (opts) {
              */
             getConnections: async function () {
                 // console.log("router get connection")
-                return invoke(aw, pending, this.pkgname, "GetConnections", "{}", "timeout while fetching router connection id")
+                return invoke(aw, pending, this.pkgname, "Connections", "{}", "timeout while fetching router connection id")
             },
 
             /**
